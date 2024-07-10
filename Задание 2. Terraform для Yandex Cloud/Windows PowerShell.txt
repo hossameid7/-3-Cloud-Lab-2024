@@ -1,0 +1,62 @@
+PS C:\Users\Hossam> Get-Date
+
+6 июля 2024 г. 15:05:30                                 W                                                                                                      PS C:\Users\Hossam> terraform version                                                                                                            ov.     Us\s oW -URI 'https://hashicorp-releases.yandexcloud.net/terraform/1.9.1/terraform_1.9.1_windows_amd64.zip' -OutFile $HOME\terraform\terraform_1.9.1_windows_amd64.zip       PS C:\Users\Hossam> Expand-Archive -Path $HOME\terraform\terraform_1.9.1_windows_amd64.zip -DestinationPath $HOME\terraform
+PS C:\Users\Hossam> $CurPATH = [Environment]::GetEnvironmentVariable("PATH")
+PS C:\Users\Hossam> $TfDir = "$env:USERPROFILE\terraform"
+PS C:\Users\Hossam> [Environment]::SetEnvironmentVariable("PATH", "$CurPATH;$TfDir", "User")
+PS C:\Users\Hossam> $env:PATH = "$env:PATH;$TfDir"
+PS C:\Users\Hossam> terraform -version
+Terraform v1.9.1
+on windows_amd64
+PS C:\Users\Hossam> Set-Content -Path $env:APPDATA\terraform.rc -Value @"
+>> provider_installation {
+>>   network_mirror {
+>>     url = "https://terraform-mirror.yandexcloud.net/"
+>>     include = ["registry.terraform.io/*/*"]
+>>   }
+>>   direct {
+>>     exclude = ["registry.terraform.io/*/*"]
+>>   }
+>> }
+>> "@
+PS C:\Users\Hossam> Test-Path $env:APPDATA\terraform.rc
+True
+
+PS C:\Users\Hossam> $filePath = "$env:APPDATA\terraform.rc"
+PS C:\Users\Hossam> Write-Output $filePath
+C:\Users\Hossam\AppData\Roaming\terraform.rc
+PS C:\Users\Hossam> yc iam service-account create --name pr12-terraform
+done (1s)
+id: ajeu0ln37d88v6mvnaf9
+folder_id: b1guilhk9kmh58p160il
+created_at: "2024-07-06T12:17:13.388545231Z"
+name: pr12-terraform
+
+PS C:\Users\Hossam> yc resource-manager folder add-access-binding pr12 --role admin --service-account-name=pr12-terraform
+done (4s)
+effective_deltas:
+  - action: ADD
+    access_binding:
+      role_id: admin
+      subject:
+        id: ajeu0ln37d88v6mvnaf9
+        type: serviceAccount
+
+PS C:\Users\Hossam> mkdir $HOME\keys
+
+
+    Directory: C:\Users\Hossam
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        06.07.2024     15:20                keys
+
+
+PS C:\Users\Hossam> yc iam key create --service-account-name pr12-terraform --output $HOME\keys\yc-key.json
+id: ajehnejn7940l3l5ef00
+service_account_id: ajeu0ln37d88v6mvnaf9
+created_at: "2024-07-06T12:20:25.935041754Z"
+key_algorithm: RSA_2048
+
+PS C:\Users\Hossam>

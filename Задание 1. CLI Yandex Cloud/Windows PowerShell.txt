@@ -1,0 +1,47 @@
+PS C:\Users\Hossam> Get-Date
+
+6 июля 2024 г. 14:47:33                                                     PS C:\Users\Hossam> (Invoke-WebRequest -URI 'https://storage.yandexcloud.net/yandexcloud-yc/install.ps1').Content | Invoke-Expression Downloading yc 0.128.0
+Yandex Cloud CLI 0.128.0 windows/amd64
+PS C:\Users\Hossam> yc init
+Welcome! This command will take you through the configuration process.
+Pick desired action:
+ [1] Re-initialize this profile 'default' with new settings
+ [2] Create a new profile
+Please enter your numeric choice: 1
+Please go to https://oauth.yandex.ru/authorize?response_type=token&client_id=1a6990aa636648e9b2ef855fa7bec2fb in order to obtain OAuth token.
+ Please enter OAuth token: [y0_AgAEA7qkdRXu*******************************j0uK7O1MUgxmpXg]
+Please select cloud to use:
+ [1] cloud-keydstudkpfuru (id = b1gd47cdcsas6u50e0ba)
+ [2] itis-cl-spr3 (id = b1g71e95h51okii30p25)
+Please enter your numeric choice: 2
+Your current cloud has been set to 'itis-cl-spr3' (id = b1g71e95h51okii30p25).
+Please choose folder to use:
+ [1] pr12 (id = b1guilhk9kmh58p160il)
+ [2] Create a new folder
+Please enter your numeric choice: 1
+Your current folder has been set to 'pr12' (id = b1guilhk9kmh58p160il).
+Do you want to configure a default Compute zone? [Y/n] y
+Which zone do you want to use as a profile default?
+ [1] ru-central1-a
+ [2] ru-central1-b
+ [3] ru-central1-c
+ [4] ru-central1-d
+ [5] Don't set default zone
+Please enter your numeric choice: 1
+Your profile default Compute zone has been set to 'ru-central1-a'.
+PS C:\Users\Hossam> yc resource-manager cloud list
++----------------------+----------------------+----------------------+--------+
+|          ID          |         NAME         |   ORGANIZATION ID    | LABELS |
++----------------------+----------------------+----------------------+--------+
+| b1gd47cdcsas6u50e0ba | cloud-keydstudkpfuru | bpfje1skdq9ekqnqrd2a |        |
+| b1g71e95h51okii30p25 | itis-cl-spr3         | bpfvqfqe8csr1e9m8g8s |        |
++----------------------+----------------------+----------------------+--------+
+
+PS C:\Users\Hossam> yc iam service-account list
++----------------------+-------------------+--------+
+|          ID          |       NAME        | LABELS |
++----------------------+-------------------+--------+
+| ajeh9b4jobqqdciarnf2 | sa-pr12-terraform |        |
++----------------------+-------------------+--------+
+
+PS C:\Users\Hossam>
